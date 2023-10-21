@@ -1,0 +1,96 @@
+body {
+    background: #49796B;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.card {
+    color: #44362F;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #44362F;
+    opacity: 99%;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .25s ease;
+}
+
+
+.photo:hover .overlay {
+    height: 40%;
+}
+
+.overtext {
+    color: white;
+    font-size: 1.2em;
+    position: relative;
+    top: 50%;
+    left: 0%;
+    text-align: center;
+
+}
+
+.overlayhome {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: black;
+    opacity: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    transition: 1.5s ease;
+}
+
+
+.photo:hover .overlayhome {
+    opacity: 67%;
+}
+
+.overtexthome {
+    color: white;
+    font-size: 1.2em;
+    position: relative;
+    top: 50%;
+    left: 0%;
+    text-align: center;
+
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+  a:hover {
+    text-decoration: none;
+}
+
+.button {
+    background-color: white;
+    color: #49796B;   
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    margin: 3px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #49796B;
+    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+}

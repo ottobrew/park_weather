@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>State Park Weather</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>    
+    <div class="container">
+      <h1 class="text-left">State Park Camping Weather</h1>
+        <div class="photo">
+          <a href="{% url 'parks.list' %}">
+            <img src="/static/images/scott-goodwill-unsplash.jpg" style="max-width:100%; height:auto" alt="Photo by Scott Goodwill on Unsplash">
+            <div class="overlayhome">
+              <h3 class="overtexthome">Explore South Dakota State Parks</h3>
+            </div>
+          </a>
+        </div>
+    </div>    
+  </body>
+</html>

@@ -1,5 +1,0 @@
-{
-  "git.ignoreLimitWarning": true,
-  "appService.defaultWebAppToDeploy": "undefined/subscriptions/4927dc47-4fcf-475e-8694-164fdf23841c/resourceGroups/default-webapps/providers/Microsoft.Web/sites/camping-weather",
-  "appService.deploySubpath": "."
-}

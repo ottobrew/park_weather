@@ -2,24 +2,28 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="my-5">Camping in South Dakota's State Parks</h1>
+    <h1 class="my-5 londrina">Camping in South Dakota's State Parks</h1>
     
     <div class="container">
         <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 g-2">
             {% for park in parks %}
             <div class="col">
-                <div class="card shadow-sm photo h-100">
-                    <a href="{% url 'parks.detail' pk=park.id %}">
-                        <img src="/static/images{{ park.image.url }}" class="card-img-top img-fluid" alt="{{ park.title }}">
-                        <div class="overlay">
-                            <h3 class="overtext">View Weather</h3>
+                <a href="{% url 'parks.detail' pk=park.id %}">
+                    <div class="card shadow-sm photo h-100">
+                        <div class="card-content">
+                            <img src="/static/images{{ park.image.url }}" class="card-img-top img-fluid" alt="{{ park.title }}">
+                            <!-- <div class="overlay">
+                                <h3 class="overtext">View Weather</h3>
+                            </div> -->
+
+                            <div class="card-body">
+                                <h3 class="card-title hover-title">{{park.title}}</h3>
+                                <h3 class="hover-title"></h3>
+                                <p class="card-text">{{park.description|truncatechars:100}}</p> 
+                            </div>
                         </div>
-                    </a>
-                    <div class="card-body">
-                        <h3 class="card-title">{{park.title}}</h3>
-                        <p class="card-text">{{park.description|truncatechars:50}}</p> 
                     </div>
-                </div>
+                </a>
             </div>
             {% endfor %}
         </div>

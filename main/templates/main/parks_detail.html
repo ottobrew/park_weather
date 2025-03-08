@@ -3,30 +3,28 @@
 {% block content %}
 <div class="container-fluid">
     <div class="card g-4 m-4">
-      <div class="row g-0">
-        <div class="col-md">
-          <div class="row">
-            <img src="/static/images{{ park.image.url }}" class="img-fluid rounded-start" alt="{{ park.title }}">
-          </div>
-          <div class="row"> 
-          </div>
+      <div class="row g-0 m-4">
+        <div class="col-lg">
+            <img src="/static/images{{ park.image.url }}" class="img-fluid rounded" alt="{{ park.title }}">
         </div>
-        <div class="col-md">
+
+        <div class="col-lg">
           <div class="card-body">
-            <h3 class="my-5">Current Conditions for {{ park.title }}</h3>
+            <h1 class="my-5 londrina">Current Conditions for {{ park.title }}</h1>
             <img src='https://openweathermap.org/img/wn/{{ data.weather.0.icon }}@2x.png'>   
             <p>Currently: {{ data.weather.0.description }} </p>
-            <p>High: {{ data.main.temp_max }} °F</p>
-            <p>Low: {{ data.main.temp_min }} °F</p>
-            <p>Humidity : {{ data.main.humidity }} %</p>
+            <p>Current Temperature: {{ data.main.temp }} °F</p>
             <p>Feels Like : {{ data.main.feels_like }} °F</p>
+            <p>Wind Speeds : {{ data.wind.speed }} MPH</p>
+            <p>Humidity : {{ data.main.humidity }} %</p>
+
             <p>{{ park.description }}</p>
           </div>
           <div class="card-footer">
             <div class="row">
               <div class="col">
-                <p>Sunrise: {{ m }}</p>
-                <p>Sunset: {{ n }}</p>
+                <p>Sunrise: {{ m }} </p>
+                <p>Sunset: {{ n }} </p>
               </div>
               <div class="col">
                 <h5>GPS Location</h5>
@@ -36,6 +34,21 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row g-0 m-4">
+        <h1 class="my-5 londrina">Detailed 5 Day Forecast</h1>
+            {% for f in fdata.list %}
+            <div class="col-sm border border-2 border-dark m-2 p-2">
+              <h6 class="card-title">{{ f.local_time }}</h6>      
+            
+            <img src='https://openweathermap.org/img/wn/{{ f.weather.0.icon }}@2x.png'>   
+            <p>{{ f.weather.0.description }}</p>
+            <p>Temperature: {{ f.main.temp }} °F</p>
+            <p>Feels Like: {{ f.main.feels_like }} °F</p>
+            <p>Wind Speeds: {{ f.wind.speed }} MPH</p>
+            </div>
+            {% endfor %}
       </div>
     </div>
 </div>

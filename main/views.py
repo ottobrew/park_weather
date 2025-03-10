@@ -6,8 +6,8 @@ from django.views.generic import TemplateView
 from django.views.generic import CreateView, ListView
 from django.conf import settings
 from datetime import datetime 
-from plotly.graph_objs import Bar
-from plotly import offline
+# from plotly.graph_objs import Bar
+# from plotly import offline
 
 # import json to load json data to python dictionary
 import json
@@ -70,30 +70,28 @@ def parks_detail(request, pk):
 
             tooltips.append(tooltip)
 
-        vdata = [{
-            'type': 'bar',
-            'x': ftime,
-            'y': ftemp,
-            'hovertext': tooltips,
-            'marker': {
-                'color': 'rgb(252, 111, 54)'
-            }
-        }]
+        # vdata = [{
+        #     'type': 'bar',
+        #     'x': ftime,
+        #     'y': ftemp,
+        #     'hovertext': tooltips,
+        #     'marker': {
+        #         'color': 'rgb(252, 111, 54)'
+        #     }
+        # }]
 
-        vlayout = {
-            'title': '5 Day Forecast',
-            'xaxis': {'title': 'Time'},
-            'yaxis': {'title': 'Temperature (°F)'}
-        }
+        # vlayout = {
+        #     'title': '5 Day Forecast',
+        #     'xaxis': {'title': 'Time'},
+        #     'yaxis': {'title': 'Temperature (°F)'}
+        # }
 
-        visual = offline.plot({
-            'data': vdata,
-            'layout': vlayout,
-        }, output_type='div')
-
-        print(fdata)
+        # visual = offline.plot({
+        #     'data': vdata,
+        #     'layout': vlayout,
+        # }, output_type='div')
 
     except Parks.DoesNotExist:
         raise Http404("Sorry, no park found here.")    
 
-    return render(request, "main/parks_detail.html", {'park':park, 'data':data, 'fdata':fdata, 'm':m, 'n':n, 'visual':visual })   
+    return render(request, "main/parks_detail.html", {'park':park, 'data':data, 'fdata':fdata, 'm':m, 'n':n })   

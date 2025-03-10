@@ -6,6 +6,8 @@ from django.views.generic import TemplateView
 from django.views.generic import CreateView, ListView
 from django.conf import settings
 from datetime import datetime 
+from plotly.graph_objs import Bar
+from plotly import offline
 
 # import json to load json data to python dictionary
 import json
@@ -46,13 +48,52 @@ def parks_detail(request, pk):
         m = datetime.fromtimestamp(sunrise).strftime('%I:%M:%S %p %D')
         n = datetime.fromtimestamp(sunset).strftime('%I:%M:%S %p %D')
 
+        # Three Lists
+        ftime, ftemp, tooltips = [], [], []
+
         # Format forecast times
         for forecast in fdata['list']:
             forecast['local_time'] = datetime.fromtimestamp(forecast['dt'] + data['timezone']).strftime('%D %I:%M %p')
 
-        print(data)
+            forecast['day_time'] = datetime.fromtimestamp(forecast['dt'] + data['timezone']).strftime('%A %I:%M %p')            
+
+            ftime.append(forecast['day_time'])
+            ftemp.append(forecast['main']['temp'])
+
+            tttemp = forecast['main']['temp']
+            ttfeels = forecast['main']['feels_like']
+            ttdescription = forecast['weather'][0]['description']
+            ttwind = forecast['wind']['speed']
+            tthumidity = forecast['main']['humidity']
+
+            tooltip = f"Forecasted Conditions: {ttdescription}<br />Temperature: {tttemp}°F<br />Feels Like: {ttfeels}°F<br />Wind Speed: {ttwind} mph<br />Humidity: {tthumidity}%"
+
+            tooltips.append(tooltip)
+
+        vdata = [{
+            'type': 'bar',
+            'x': ftime,
+            'y': ftemp,
+            'hovertext': tooltips,
+            'marker': {
+                'color': 'rgb(252, 111, 54)'
+            }
+        }]
+
+        vlayout = {
+            'title': '5 Day Forecast',
+            'xaxis': {'title': 'Time'},
+            'yaxis': {'title': 'Temperature (°F)'}
+        }
+
+        visual = offline.plot({
+            'data': vdata,
+            'layout': vlayout,
+        }, output_type='div')
+
+        print(fdata)
 
     except Parks.DoesNotExist:
         raise Http404("Sorry, no park found here.")    
 
-    return render(request, "main/parks_detail.html", {'park':park, 'data':data, 'fdata':fdata, 'm':m, 'n':n })   
+    return render(request, "main/parks_detail.html", {'park':park, 'data':data, 'fdata':fdata, 'm':m, 'n':n, 'visual':visual })   

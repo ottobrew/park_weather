@@ -27,7 +27,6 @@
                 <p>Sunset: {{ n }} </p>
               </div>
               <div class="col">
-                <h5>GPS Location</h5>
                 <p class="text-muted">Latitude: {{ data.coord.lat }}</p>
                 <p class="text-muted">Longitude: {{ data.coord.lon }}</p>
               </div>
@@ -36,11 +35,17 @@
         </div>
       </div>
 
-      <div class="row g-0 m-4">
+      <div class="row g-0 m-4 py-4">
         <h1 class="my-5 londrina">Detailed 5 Day Forecast</h1>
-            {% for f in fdata.list %}
+        {{ visual|safe }}
+      </div>
+
+      <div class="row g-0 m-4">
+        <h1 class="my-5 londrina">5 Day Forecast Snapshots</h1>
+          {% for f in fdata.list %}
+            {% if forloop.counter0|divisibleby:8 %}
             <div class="col-sm border border-2 border-dark m-2 p-2">
-              <h6 class="card-title">{{ f.local_time }}</h6>      
+              <h6 class="card-title">{{ f.day_time }}</h6>      
             
             <img src='https://openweathermap.org/img/wn/{{ f.weather.0.icon }}@2x.png'>   
             <p>{{ f.weather.0.description }}</p>
@@ -48,8 +53,10 @@
             <p>Feels Like: {{ f.main.feels_like }} °F</p>
             <p>Wind Speeds: {{ f.wind.speed }} MPH</p>
             </div>
-            {% endfor %}
+            {% endif %}
+          {% endfor %}
       </div>
+
     </div>
 </div>
   

@@ -6,12 +6,11 @@ from django.views.generic import TemplateView
 from django.views.generic import CreateView, ListView
 from django.conf import settings
 from datetime import datetime 
-# from plotly.graph_objs import Bar
-# from plotly import offline
+from plotly.graph_objs import Bar
+from django.utils.safestring import mark_safe
 
 # import json to load json data to python dictionary
 import json
-
 # import requests to make a request to api
 import requests
 
@@ -55,7 +54,7 @@ def parks_detail(request, pk):
         for forecast in fdata['list']:
             forecast['local_time'] = datetime.fromtimestamp(forecast['dt'] + data['timezone']).strftime('%D %I:%M %p')
 
-            forecast['day_time'] = datetime.fromtimestamp(forecast['dt'] + data['timezone']).strftime('%A %I:%M %p')            
+            forecast['day_time'] = datetime.fromtimestamp(forecast['dt'] + data['timezone']).strftime('%a %I:%M %p')            
 
             ftime.append(forecast['day_time'])
             ftemp.append(forecast['main']['temp'])
@@ -70,28 +69,26 @@ def parks_detail(request, pk):
 
             tooltips.append(tooltip)
 
-        # vdata = [{
-        #     'type': 'bar',
-        #     'x': ftime,
-        #     'y': ftemp,
-        #     'hovertext': tooltips,
-        #     'marker': {
-        #         'color': 'rgb(252, 111, 54)'
-        #     }
-        # }]
+        vdata = [{
+            'type': 'bar',
+            'x': ftime,
+            'y': ftemp,
+            'hovertext': tooltips,
+            'marker': {
+                'color': 'rgb(252, 111, 54)'
+            }
+        }]
 
-        # vlayout = {
-        #     'title': '5 Day Forecast',
-        #     'xaxis': {'title': 'Time'},
-        #     'yaxis': {'title': 'Temperature (°F)'}
-        # }
+        vlayout = {
+            'title': '5 Day Forecast',
+            'xaxis': {'title': 'Time', 'titlefont': {'size': 12}, 'tickfont': {'size': 10}},
+            'yaxis': {'title': 'Temperature (°F)', 'titlefont': {'size': 12}, 'tickfont': {'size': 8}}
+        }
 
-        # visual = offline.plot({
-        #     'data': vdata,
-        #     'layout': vlayout,
-        # }, output_type='div')
+        # Render plotly client-side
+        visual = mark_safe(json.dumps({'vdata': vdata, 'vlayout': vlayout}))
 
     except Parks.DoesNotExist:
         raise Http404("Sorry, no park found here.")    
 
-    return render(request, "main/parks_detail.html", {'park':park, 'data':data, 'fdata':fdata, 'm':m, 'n':n })   
+    return render(request, "main/parks_detail.html", {'park':park, 'data':data, 'fdata':fdata, 'm':m, 'n':n, 'visual':visual })   

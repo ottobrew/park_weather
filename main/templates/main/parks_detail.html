@@ -35,10 +35,12 @@
         </div>
       </div>
 
-<!--       <div class="row g-0 m-4 py-4">
+      <div class="row g-0 m-4">
         <h1 class="my-5 londrina">Detailed 5 Day Forecast</h1>
-        {{ visual|safe }}
-      </div> -->
+        <div class="container-fluid">
+          <div id="plot"></div>
+        </div>
+      </div>
 
       <div class="row g-0 m-4">
         <h1 class="my-5 londrina">5 Day Forecast Snapshots</h1>
@@ -59,5 +61,16 @@
 
     </div>
 </div>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+  var plotData = JSON.parse('{{ visual|escapejs}}');
+
+  var config = {responsive: true}
+  Plotly.newPlot('plot', plotData.vdata, plotData.vlayout, config);
+
+  window.addEventListener('resize', function() {
+        Plotly.Plots.resize('plot');
+    });
+</script>
   
 {% endblock %}
